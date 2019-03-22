@@ -9,6 +9,7 @@ void InitLSM303DLHC(void) {
     SSP2ADD = 0x19; //400kHz
     SSP2CON1bits.SSPM = 0b1000; //I2C Master mode
     SSP2CON1bits.SSPEN = 1; //Enable MSSP
+    __delay_ms(5);  //Boot time
 }
 
 void ConfigureAccel(void) {
@@ -40,8 +41,12 @@ char ReadCompass(MagData *value) {
 }
 
 char ReadAccel(AccelData *value) {
-    char result = ReadAccelData(0x29, (unsigned char *)value, 6);
+    char result = ReadAccelData(0x28, (unsigned char *)value, 6);
     return result;
+}
+
+char AccelDataReady(void) {
+    return (I2CReadRegister(ACCEL_ADDRESS, 0x27) & 0b00001000);
 }
 
 unsigned char I2CReadRegister(unsigned char i2cAddress, unsigned char reg) {

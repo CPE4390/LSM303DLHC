@@ -29,6 +29,7 @@ extern "C" {
     void ConfigureMag(void);
     char ReadCompass(MagData *value);
     char ReadAccel(AccelData *value);
+    char AccelDataReady(void);
     
 #ifdef	__cplusplus
 }

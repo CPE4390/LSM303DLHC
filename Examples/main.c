@@ -21,7 +21,7 @@ void main(void) {
     OSCTUNEbits.PLLEN = 1;
     LCDInit();
     lprintf(0, "LSM303DLHC");
-    __delay_ms(2000);
+    __delay_ms(1000);
     InitPins();
     ConfigPeriph();
     ConfigInterrupts();
@@ -29,12 +29,13 @@ void main(void) {
     ConfigureMag();
     ConfigureAccel();
     while (1) {
-//        MagData mag;
-//        ReadCompass(&mag);
-//        lprintf(0, "x:%d y:%d", mag.xMag, mag.yMag);
-//        lprintf(1, "z:%d", mag.zMag);
-//        __delay_ms(250);
+        //        MagData mag;
+        //        ReadCompass(&mag);
+        //        lprintf(0, "x:%d y:%d", mag.xMag, mag.yMag);
+        //        lprintf(1, "z:%d", mag.zMag);
+        //        __delay_ms(250);
         AccelData accel;
+        while (!AccelDataReady());
         ReadAccel(&accel);
         lprintf(0, "x:%d y:%d", accel.xAccel, accel.yAccel);
         lprintf(1, "z:%d", accel.zAccel);
@@ -69,14 +70,13 @@ void ConfigPeriph(void) {
 
     //Configure peripherals here
 
-    
-}
 
+}
 
 void __interrupt(high_priority) HighIsr(void) {
     if (INTCONbits.INT0IF == 1) {
         //source is INT0
-        
+
         INTCONbits.INT0IF = 0;
     }
 }
