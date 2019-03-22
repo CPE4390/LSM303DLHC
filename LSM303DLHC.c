@@ -12,7 +12,8 @@ void InitLSM303DLHC(void) {
 }
 
 void ConfigureAccel(void) {
-    
+    I2CWriteRegister(ACCEL_ADDRESS, 0x20, 0b01000111); //50 Hz
+    I2CWriteRegister(ACCEL_ADDRESS, 0x22, 0b00010000); //DRDY on Int1
 }
 
 void ConfigureMag(void) {
@@ -35,6 +36,11 @@ char ReadCompass(MagData *value) {
     temp = ptr[4];
     ptr[4] = ptr[5];
     ptr[5] = temp;
+    return result;
+}
+
+char ReadAccel(AccelData *value) {
+    char result = ReadAccelData(0x29, (unsigned char *)value, 6);
     return result;
 }
 

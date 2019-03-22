@@ -14,6 +14,12 @@ extern "C" {
         int yMag;
     } MagData;
     
+    typedef struct {
+        int xAccel;
+        int yAccel;
+        int zAccel;
+    } AccelData;
+    
     void InitLSM303DLHC(void);
     unsigned char I2CReadRegister(unsigned char i2cAddress, unsigned char reg);
     void I2CWriteRegister(unsigned char i2cAddress, unsigned char reg, unsigned int data);
@@ -22,6 +28,7 @@ extern "C" {
     void ConfigureAccel(void);
     void ConfigureMag(void);
     char ReadCompass(MagData *value);
+    char ReadAccel(AccelData *value);
     
 #ifdef	__cplusplus
 }
